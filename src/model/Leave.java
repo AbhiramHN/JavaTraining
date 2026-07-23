@@ -1,3 +1,5 @@
+package model;
+
 import java.time.LocalDate;
 
 public class Leave {
@@ -10,7 +12,6 @@ public class Leave {
     private LocalDate requestDate;
     private LocalDate endDate;
     private LocalDate approvalDate;
-
 
     public String getEmployeeId() {
         return employeeId;
@@ -43,7 +44,6 @@ public class Leave {
     public void setStatus(String status) {
         this.status = status;
     }
-
 
     public LocalDate getApprovalDate() {
         return approvalDate;

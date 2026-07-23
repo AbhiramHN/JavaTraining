@@ -1,3 +1,10 @@
+package repository;
+
+import model.Employee;
+import model.Lead;
+import model.Leave;
+import model.Manager;
+
 import java.util.ArrayList;
 
 public class LeaveRepository
@@ -11,6 +18,12 @@ public class LeaveRepository
         executivePendingLeaves = new ArrayList<>();
         leadPendingLeaves = new ArrayList<>();
         managerLeaves = new ArrayList<>();
+    }
+
+    public void removePendingLeave(Leave leave)
+    {
+        executivePendingLeaves.remove(leave);
+        leadPendingLeaves.remove(leave);
     }
 
     public ArrayList<Leave> getExecutivePendingLeaves()

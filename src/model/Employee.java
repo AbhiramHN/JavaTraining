@@ -1,8 +1,10 @@
+package model;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class Employee
+public class Employee
 {
     private String empId;
     private String name;
@@ -40,18 +42,23 @@ class Employee
     public String getEmpId() {
         return empId;
     }
+
     public String getName() {
         return name;
     }
+
     public int getDesignation() {
         return designation;
     }
+
     public int getAge() {
         return age;
     }
+
     public String getGender() {
         return gender;
     }
+
     public String getPassword() {
         return password;
     }
@@ -59,18 +66,23 @@ class Employee
     public void setEmpId(String empId) {
         this.empId = empId;
     }
+
     public void setName(String name) {
         this.name = name;
     }
+
     public void setDesignation(int designation) {
         this.designation = designation;
     }
+
     public void setAge(int age) {
         this.age = age;
     }
+
     public void setGender(String gender) {
         this.gender = gender;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }

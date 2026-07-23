@@ -1,41 +1,35 @@
+package service;
+
+import interfaces.LeaveApprovalOperations;
+import model.Employee;
+import model.Executive;
+import model.Leave;
+import repository.LeaveRepository;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Manager extends Employee implements LeaveApprovalOperations
+public class LeaveApprovalService implements LeaveApprovalOperations
 {
-    private ArrayList<Leave> leadPendingLeaves;
-    private ArrayList<Leave> executivePendingLeaves;
-    private HashMap<String, Employee> employeesHashMap;
-    private Scanner sc;
 
-    public Manager(ArrayList<Leave> executivePendingLeaves, ArrayList<Leave> leadPendingLeaves,
-                   HashMap<String, Employee> employeesHashMap,
-                   Scanner sc)
+    private LeaveRepository leaveRepository;
+
+    public LeaveApprovalService(LeaveRepository leaveRepository)
     {
-        this.executivePendingLeaves = executivePendingLeaves;
-        this.leadPendingLeaves = leadPendingLeaves;
-        this.employeesHashMap = employeesHashMap;
-        this.sc = sc;
+        this.leaveRepository = leaveRepository;
     }
-
-
     @Override
-    public void approveLeave()
+    public void approveLeave(ArrayList<Leave> pendingLeaves, HashMap<String, Employee> employeesHashMap, Scanner sc)
     {
-        ArrayList<Leave> allPendingLeaves = new ArrayList<>();
-
-        allPendingLeaves.addAll(executivePendingLeaves);
-        allPendingLeaves.addAll(leadPendingLeaves);
-
-        if(allPendingLeaves.isEmpty())
+        if(pendingLeaves.isEmpty())
         {
             System.out.println("\nNo pending leave requests.\n");
             return;
         }
 
-        for(Leave leave : allPendingLeaves)
+        for(Leave leave : pendingLeaves)
         {
             System.out.println("\nEmployee ID : " + leave.getEmployeeId());
             System.out.println("Leave Type  : " + leave.getLeaveType());
@@ -50,7 +44,7 @@ public class Manager extends Employee implements LeaveApprovalOperations
 
         Leave selectedLeave = null;
 
-        for(Leave leave : allPendingLeaves)
+        for(Leave leave : pendingLeaves)
         {
             if(leave.getEmployeeId().equals(employeeId))
             {
@@ -134,30 +128,33 @@ public class Manager extends Employee implements LeaveApprovalOperations
                     .getLeaveBalance()
                     .put(leaveType, newBalance);
 
-            executivePendingLeaves.remove(selectedLeave);
-            leadPendingLeaves.remove(selectedLeave);
+            leaveRepository.removePendingLeave(selectedLeave);
 
             System.out.println("\nLeave Approved Successfully!\n");
         }
 
-        if(choice == 2)
+        else if(choice == 2)
         {
             selectedLeave.setStatus("REJECTED");
 
-            executivePendingLeaves.remove(selectedLeave);
-            leadPendingLeaves.remove(selectedLeave);
+            leaveRepository.removePendingLeave(selectedLeave);
 
             System.out.println("\nLeave Rejected Successfully!\n");
         }
     }
 
     @Override
-    public void revokeLeave()
+    public void revokeLeave(HashMap<String, Employee> employeesHashMap, Scanner sc)
     {
         boolean approvedLeaveFound = false;
 
         for(Employee employee : employeesHashMap.values())
         {
+            if(!(employee instanceof Executive))
+            {
+                continue;
+            }
+
             for(Leave leave : employee.getLeaveRequests())
             {
                 if(leave.getStatus().equals("APPROVED"))
@@ -187,6 +184,11 @@ public class Manager extends Employee implements LeaveApprovalOperations
 
         for(Employee employee : employeesHashMap.values())
         {
+            if(!(employee instanceof Executive))
+            {
+                continue;
+            }
+
             for(Leave leave : employee.getLeaveRequests())
             {
                 if(leave.getEmployeeId().equals(employeeId) && leave.getStatus().equals("APPROVED"))
@@ -221,7 +223,6 @@ public class Manager extends Employee implements LeaveApprovalOperations
         }
 
         selectedLeave.setStatus("REVOKED");
-
         String leaveType = selectedLeave.getLeaveType();
 
         Employee employee = employeesHashMap.get(selectedLeave.getEmployeeId());
