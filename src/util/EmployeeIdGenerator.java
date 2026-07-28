@@ -15,4 +15,9 @@ public class EmployeeIdGenerator
         employeeCounter++;
         return employeeId;
     }
+
+    public void setEmployeeCounter(int employeeCounter)
+    {
+        this.employeeCounter = employeeCounter;
+    }
 }

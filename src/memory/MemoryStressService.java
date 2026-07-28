@@ -45,7 +45,7 @@ public class MemoryStressService
         }
         catch(OutOfMemoryError exception)
         {
-            System.out.println("\nNear Memory Exhaustion Detected.");
+            System.out.println("\nMemory Exhaustion Detected.");
             System.out.println(exception.getMessage());
             System.out.println("Handling memory exhaustion...");
             memoryUsageService.displayMemoryUsage();

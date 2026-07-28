@@ -40,17 +40,11 @@ class LMSMenu {
     public LMSMenu()
     {
         leaveApprovalService = new LeaveApprovalService(leaveRepository);
-
         employeeService = new EmployeeService(sc, employeesHashMap, leaveApprovalService);
 
-        authenticationService = new AuthenticationService(
-                sc,
-                employeesHashMap
-        );
+        authenticationService = new AuthenticationService(sc, employeesHashMap);
 
-        employeeReportService = new EmployeeReportService(
-                employeesHashMap
-        );
+        employeeReportService = new EmployeeReportService(employeesHashMap);
 
         leaveManagementService = new LeaveManagementService(
                 sc,
@@ -73,7 +67,9 @@ class LMSMenu {
         System.out.println("8. Logout");
         System.out.println("9. Display Current JVM Memory Usage");
         System.out.println("10. Simulate Memory Exhaustion");
-        System.out.println("11. Exit");
+        System.out.println("11. Load Employees From CSV");
+        System.out.println("12. Save Employees To CSV");
+        System.out.println("13. Exit");
         System.out.println("Please Enter Number: ");
     }
 
@@ -86,7 +82,7 @@ class LMSMenu {
                     break;
 
                 case 2:
-                    currentUser = authenticationService.login();
+                    currentUser = authenticationService.login();           //polymorphism
                     break;
 
                 case 3:
@@ -112,10 +108,7 @@ class LMSMenu {
 
                     if (currentUser instanceof Lead)
                     {
-                        ((LeaveApprovalOperations) currentUser).approveLeave(
-                                leaveRepository.getExecutivePendingLeaves(),
-                                employeesHashMap,
-                                sc);
+                        ((LeaveApprovalOperations) currentUser).approveLeave(leaveRepository.getExecutivePendingLeaves(), employeesHashMap, sc);
                     }
                     else if (currentUser instanceof Manager)
                     {
@@ -168,7 +161,15 @@ class LMSMenu {
                     memoryStressService.simulateMemoryExhaustion();
                     break;
 
-                case 11:
+                case 11 :
+                    employeeService.loadEmployeesFromCSV();
+                    break;
+
+                case 12:
+                    employeeService.saveEmployeesToCSV();
+                    break;
+
+                case 13:
                     System.out.println("Exiting LMS...");
                     System.exit(0);
                     break;
