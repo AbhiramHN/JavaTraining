@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Request Leave</title>
+
+</head>
+
+<body>
+
+<h1>Request Leave</h1>
+
+<form action="../requestLeave" method="post">
+
+    <label for="leaveType">Leave Type</label>
+
+    <select
+            id="leaveType"
+            name="leaveType"
+            required>
+
+        <option value="">Select Leave Type</option>
+        <option value="CL">Casual Leave</option>
+        <option value="SL">Sick Leave</option>
+        <option value="ML">Maternity Leave</option>
+        <option value="PL">Paternity Leave</option>
+        <option value="LWP">Leave Without Pay</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="fromDate">From Date</label>
+
+    <input
+            type="date"
+            id="fromDate"
+            name="fromDate"
+            required>
+
+    <br><br>
+
+    <label for="toDate">To Date</label>
+
+    <input
+            type="date"
+            id="toDate"
+            name="toDate"
+            required>
+
+    <br><br>
+
+    <label for="reason">Reason</label>
+
+    <br>
+
+    <textarea
+            id="reason"
+            name="reason"
+            rows="5"
+            cols="40"
+            required></textarea>
+
+    <br><br>
+
+    <button type="submit">
+
+        Submit Request
+
+    </button>
+
+</form>
+
+</body>
+
+</html>

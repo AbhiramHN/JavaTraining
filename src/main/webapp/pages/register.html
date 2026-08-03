@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Registration</title>
+</head>
+
+<body>
+
+<h1>Employee Registration</h1>
+
+<form action="../register" method="post">
+
+    <label for="name">Name</label>
+    <input
+            type="text"
+            id="name"
+            name="name"
+            required>
+
+    <br><br>
+
+    <label for="designation">Designation</label>
+
+    <select
+            id="designation"
+            name="designation"
+            required>
+
+        <option value="">Select Designation</option>
+        <option value="EXECUTIVE">Executive</option>
+        <option value="LEAD">Lead</option>
+        <option value="MANAGER">Manager</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="age">Age</label>
+
+    <input
+            type="number"
+            id="age"
+            name="age"
+            min="18"
+            required>
+
+    <br><br>
+
+    <label for="gender">Gender</label>
+
+    <select id="gender" name="gender" required>
+
+        <option value="">Select Gender</option>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+
+    </select>
+
+    <br><br>
+
+    <label for="password">Password</label>
+
+    <input
+            type="password"
+            id="password"
+            name="password"
+            required>
+
+    <br><br>
+
+    <button type="submit">
+
+        Register
+
+    </button>
+
+    <br><br>
+
+    <button type="button" onclick="window.location.href='login.html'">
+        Go to Login
+    </button>
+
+</form>
+
+</body>
+
+</html>
