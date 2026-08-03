@@ -1,6 +1,8 @@
 package service;
 
 import factory.EmployeeFactory;
+import io.EmployeeCSVLoader;
+import io.EmployeeCSVWriter;
 import model.Employee;
 import util.EmployeeIdGenerator;
 
@@ -18,6 +20,8 @@ public class EmployeeService
 
     private EmployeeFactory employeeFactory;
     private EmployeeIdGenerator employeeIdGenerator;
+    private EmployeeCSVLoader employeeCSVLoader;
+    private EmployeeCSVWriter employeeCSVWriter;
 
     public EmployeeService(Scanner sc, HashMap<String, Employee> employeesHashMap, LeaveApprovalOperations leaveApprovalService)
     {
@@ -27,6 +31,39 @@ public class EmployeeService
 
         employeeFactory = new EmployeeFactory();
         employeeIdGenerator = new EmployeeIdGenerator();
+        employeeCSVLoader = new EmployeeCSVLoader(leaveApprovalService);
+        employeeCSVWriter = new EmployeeCSVWriter();
+    }
+
+    public void loadEmployeesFromCSV()
+    {
+        employeeCSVLoader.loadEmployees(employeesHashMap);
+
+        updateEmployeeCounter();
+    }
+
+    public void saveEmployeesToCSV()
+    {
+        employeeCSVWriter.saveEmployees(employeesHashMap);
+    }
+    private void updateEmployeeCounter()
+    {
+        int highestEmployeeNumber = 0;
+
+        for (Employee employee : employeesHashMap.values())
+        {
+            String employeeId = employee.getEmpId();
+
+            int currentNumber =
+                    Integer.parseInt(employeeId.substring(3));
+
+            if (currentNumber > highestEmployeeNumber)
+            {
+                highestEmployeeNumber = currentNumber;
+            }
+        }
+
+        employeeIdGenerator.setEmployeeCounter(highestEmployeeNumber + 1);
     }
 
     public void registerEmployee()
@@ -55,7 +92,7 @@ public class EmployeeService
 
         String employeeId = employeeIdGenerator.generateEmployeeId();
 
-        Employee employee = employeeFactory.createEmployee(designation, leaveApprovalService);
+        Employee employee = employeeFactory.createEmployee(designation, leaveApprovalService); // runtime polymorphism
 
         employee.setName(name);
         employee.setDesignation(designation);

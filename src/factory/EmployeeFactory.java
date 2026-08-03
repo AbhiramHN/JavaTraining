@@ -8,20 +8,48 @@ import model.Manager;
 
 public class EmployeeFactory
 {
-    public Employee createEmployee(int designation,
-                                   LeaveApprovalOperations leaveApprovalService)
+    private enum Designation
     {
-        if (designation == 1)
+        EXECUTIVE,
+        LEAD,
+        MANAGER
+    }
+
+    public Employee createEmployee(int designation, LeaveApprovalOperations leaveApprovalService)
+    {
+        Designation employeeDesignation;
+
+        switch (designation)
         {
-            return new Executive();
+            case 1:
+                employeeDesignation = Designation.EXECUTIVE;
+                break;
+
+            case 2:
+                employeeDesignation = Designation.LEAD;
+                break;
+
+            case 3:
+                employeeDesignation = Designation.MANAGER;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid Designation");
         }
-        else if (designation == 2)
+
+        switch (employeeDesignation)
         {
-            return new Lead(leaveApprovalService);
-        }
-        else
-        {
-            return new Manager(leaveApprovalService);
+            case EXECUTIVE:
+                return new Executive();
+
+            case LEAD:
+                return new Lead(leaveApprovalService);
+
+            case MANAGER:
+                return new Manager(leaveApprovalService);
+
+            default:
+                throw new IllegalArgumentException("Invalid Designation");
         }
     }
 }
