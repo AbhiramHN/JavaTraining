@@ -7,6 +7,7 @@ import database.DBConnection;
 import enums.Designation;
 import enums.LeaveStatus;
 import enums.LeaveType;
+import exception.UnauthorizedActionException;
 import model.Employee;
 import model.Leave;
 
@@ -39,9 +40,8 @@ public class LeaveApprovalService
         return leaveDAO.getApprovedLeaveRequests(designation);
     }
 
-    public boolean processLeave(Employee approver,
-                                int leaveId,
-                                LeaveStatus leaveStatus)
+    public boolean processLeave(Employee approver, int leaveId, LeaveStatus leaveStatus)
+            throws UnauthorizedActionException
     {
 
         if(leaveStatus != LeaveStatus.APPROVED
@@ -64,7 +64,7 @@ public class LeaveApprovalService
 
         if(approver.getDesignation() == Designation.EXECUTIVE)
         {
-            return false;
+            throw new UnauthorizedActionException("Only Lead or Manager can approve leave.");
         }
 
         if(leave.getStatus() != LeaveStatus.PENDING)
@@ -74,7 +74,7 @@ public class LeaveApprovalService
 
         if(approver.getEmployeeId().equals(leave.getEmployeeId()))
         {
-            return false;
+            throw new UnauthorizedActionException("You cannot approve your own leave.");
         }
 
         Employee employee = employeeDAO.getEmployeeById(leave.getEmployeeId());
@@ -87,7 +87,7 @@ public class LeaveApprovalService
         if(approver.getDesignation() == Designation.LEAD
                 && employee.getDesignation() != Designation.EXECUTIVE)
         {
-            return false;
+            throw new UnauthorizedActionException("Lead can only approve Executive leave requests.");
         }
 
         Map<LeaveType, Integer> leaveBalance =

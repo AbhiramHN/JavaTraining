@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Employee;
 import model.Leave;
 import service.LeaveApprovalService;
+import exception.UnauthorizedActionException;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -133,6 +134,12 @@ public class ApproveLeaveServlet extends HttpServlet
 
         Employee approver = (Employee) session.getAttribute("employee");
 
+        if(approver == null)
+        {
+            response.sendRedirect("pages/login.html");
+            return;
+        }
+
         if(approver.getDesignation() == Designation.EXECUTIVE)
         {
             response.sendRedirect("dashboard");
@@ -149,15 +156,29 @@ public class ApproveLeaveServlet extends HttpServlet
 
         LeaveStatus leaveStatus = LeaveStatus.valueOf(request.getParameter("action"));
 
-        boolean processed = leaveApprovalService.processLeave(approver, leaveId, leaveStatus);
-
-        if(processed)
+        try
         {
+            leaveApprovalService.processLeave(approver, leaveId, leaveStatus);
+
             response.sendRedirect("approveLeave");
         }
-        else
+        catch(UnauthorizedActionException exception)
         {
-            response.sendRedirect("approveLeave");
+            response.setContentType("text/html");
+
+            PrintWriter out = response.getWriter();
+
+            out.println("<html>");
+            out.println("<body>");
+
+            out.println("<h2 style='color:red;'>" + exception.getMessage() + "</h2>");
+
+            out.println("<br>");
+
+            out.println("<a href='approveLeave'>Back</a>");
+
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 }
