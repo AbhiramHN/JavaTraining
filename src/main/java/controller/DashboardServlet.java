@@ -1,5 +1,6 @@
 package controller;
 
+import enums.Designation;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,8 +44,13 @@ public class DashboardServlet extends HttpServlet
         out.println("<html>");
         out.println("<head>");
         out.println("<title>Dashboard</title>");
+        out.println("<link rel='stylesheet' href='css/common.css'>");
+        out.println("<link rel='stylesheet' href='css/dashboard.css'>");
         out.println("</head>");
         out.println("<body>");
+
+        out.println("<div class='dashboard-container'>");
+        out.println("<div class='dashboard-card'>");
 
         out.println("<h1>Leave Management System</h1>");
 
@@ -52,28 +58,36 @@ public class DashboardServlet extends HttpServlet
                 + employee.getName()
                 + "</h2>");
 
-        out.println("<p><strong>Employee ID:</strong> "
+        out.println("<div class='dashboard-info'>");
+
+        out.println("<p><strong>Employee ID :</strong> "
                 + employee.getEmployeeId()
                 + "</p>");
 
-        out.println("<p><strong>Designation:</strong> "
+        out.println("<p><strong>Designation :</strong> "
                 + employee.getDesignation()
                 + "</p>");
 
-        out.println("<hr>");
+        out.println("</div>");
 
-        out.println("<a href='pages/requestLeave.html'>Request Leave</a><br><br>");
+        out.println("<div class='dashboard-links'>");
+        out.println("<a href='pages/requestLeave.html'>Request Leave</a>");
 
-        out.println("<a href='leaveHistory'>View Leave History</a><br><br>");
+        out.println("<a href='leaveHistory'>View Leave History</a>");
 
-        if(employee.getDesignation().name().equals("LEAD")
-                || employee.getDesignation().name().equals("MANAGER"))
+        if(employee.getDesignation() == Designation.LEAD || employee.getDesignation() == Designation.MANAGER)
         {
-            out.println("<a href='approveLeave'>Approve Leave</a><br><br>");
-            out.println("<a href='revokeLeave'>Revoke Leave</a><br><br>");
+            out.println("<a href='approveLeave'>Approve Leave</a>");
+            out.println("<a href='revokeLeave'>Revoke Leave</a>");
+            out.println("<a href='generateReport'>Generate Report</a>");
+
+
         }
 
         out.println("<a href='logout'>Logout</a>");
+
+        out.println("</div>");
+        out.println("</div>");
 
         out.println("</body>");
         out.println("</html>");

@@ -9,45 +9,56 @@
 
     <title>Employee Login</title>
 
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/login.css">
+
 </head>
 
 <body>
 
-<h1>Employee Login</h1>
+<div class="container">
 
-<form action="../login" method="post">
+    <div class="card">
 
-    <label for="employeeId">
-        Employee ID
-    </label>
+        <h1>Employee Login</h1>
 
-    <input
-            type="text"
-            id="employeeId"
-            name="employeeId"
-            required>
+        <form action="../login" method="post">
 
-    <br><br>
+            <label for="employeeId">
+                Employee ID
+            </label>
 
-    <label for="password">
-        Password
-    </label>
+            <input
+                    type="text"
+                    id="employeeId"
+                    name="employeeId"
+                    required>
 
-    <input
-            type="password"
-            id="password"
-            name="password"
-            required>
+            <label for="password">
+                Password
+            </label>
 
-    <br><br>
+            <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required>
 
-    <button type="submit">
+            <button type="submit">
+                Login
+            </button>
 
-        Login
+            <button
+                    type="button"
+                    onclick="window.location.href='register.html'">
+                Create New Account
+            </button>
 
-    </button>
+        </form>
 
-</form>
+    </div>
+
+</div>
 
 </body>
 

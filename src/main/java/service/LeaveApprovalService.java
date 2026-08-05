@@ -184,7 +184,20 @@ public class LeaveApprovalService
             return false;
         }
 
-        if(!leave.getEmployeeId().equals(employee.getEmployeeId()))
+        Employee leaveEmployee = employeeDAO.getEmployeeById(leave.getEmployeeId());
+        if(leaveEmployee == null)
+        {
+            return false;
+        }
+
+        if(employee.getDesignation() == Designation.LEAD
+                && leaveEmployee.getDesignation() != Designation.EXECUTIVE)
+        {
+            return false;
+        }
+
+        if(employee.getDesignation() == Designation.MANAGER
+                && leaveEmployee.getDesignation() == Designation.MANAGER)
         {
             return false;
         }
@@ -195,8 +208,7 @@ public class LeaveApprovalService
             return false;
         }
 
-        Map<LeaveType, Integer> leaveBalance =
-                leaveBalanceDAO.getLeaveBalance(employee.getEmployeeId());
+        Map<LeaveType, Integer> leaveBalance = leaveBalanceDAO.getLeaveBalance(leave.getEmployeeId());
 
         try(Connection connection = DBConnection.getConnection())
         {
@@ -234,7 +246,7 @@ public class LeaveApprovalService
                     boolean balanceUpdated =
                             leaveBalanceDAO.updateLeaveBalance(
                                     connection,
-                                    employee.getEmployeeId(),
+                                    leave.getEmployeeId(),
                                     leave.getLeaveType(),
                                     newBalance);
 

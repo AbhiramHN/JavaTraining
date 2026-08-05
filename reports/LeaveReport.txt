@@ -1,0 +1,15 @@
+=====================================
+     LEAVE MANAGEMENT REPORT
+=====================================
+
+Generated On : 2026-08-05T04:44:20.072997400
+
+Total Employees : 6
+Pending Leaves  : 1
+Approved Leaves : 2
+Rejected Leaves : 2
+Revoked Leaves  : 1
+
+=====================================
+End Of Report
+=====================================

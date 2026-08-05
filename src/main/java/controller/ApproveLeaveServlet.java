@@ -59,8 +59,13 @@ public class ApproveLeaveServlet extends HttpServlet
         out.println("<html>");
         out.println("<head>");
         out.println("<title>Approve Leave</title>");
+        out.println("<link rel='stylesheet' href='css/common.css'>");
+        out.println("<link rel='stylesheet' href='css/approveLeave.css'>");
         out.println("</head>");
         out.println("<body>");
+
+        out.println("<div class='approve-container'>");
+        out.println("<div class='approve-card'>");
 
         out.println("<h1>Pending Leave Requests</h1>");
 
@@ -90,18 +95,18 @@ public class ApproveLeaveServlet extends HttpServlet
             out.println("<td>" + leave.getReason() + "</td>");
 
             out.println("<td>");
-            out.println("<form action='approveLeave' method='post'>");
+            out.println("<form class='action-form' action='approveLeave' method='post'>");
             out.println("<input type='hidden' name='leaveId' value='" + leave.getLeaveId() + "'>");
             out.println("<input type='hidden' name='action' value='APPROVED'>");
-            out.println("<input type='submit' value='Approve'>");
+            out.println("<input class='approve-button' type='submit' value='Approve'>");
             out.println("</form>");
             out.println("</td>");
 
             out.println("<td>");
-            out.println("<form action='approveLeave' method='post'>");
+            out.println("<form class='action-form' action='approveLeave' method='post'>");
             out.println("<input type='hidden' name='leaveId' value='" + leave.getLeaveId() + "'>");
             out.println("<input type='hidden' name='action' value='REJECTED'>");
-            out.println("<input type='submit' value='Reject'>");
+            out.println("<input class='reject-button' type='submit' value='Reject'>");
             out.println("</form>");
             out.println("</td>");
 
@@ -109,10 +114,10 @@ public class ApproveLeaveServlet extends HttpServlet
         }
 
         out.println("</table>");
+        out.println("<a class='back-button' href='dashboard'>Back to Dashboard</a>");
 
-        out.println("<br><br>");
-
-        out.println("<a href='dashboard'>Back to Dashboard</a>");
+        out.println("</div>");
+        out.println("</div>");
 
         out.println("</body>");
         out.println("</html>");

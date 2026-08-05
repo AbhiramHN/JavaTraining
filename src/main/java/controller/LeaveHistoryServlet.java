@@ -55,8 +55,13 @@ public class LeaveHistoryServlet extends HttpServlet
         out.println("<html>");
         out.println("<head>");
         out.println("<title>Leave History</title>");
+        out.println("<link rel='stylesheet' href='css/common.css'>");
+        out.println("<link rel='stylesheet' href='css/leaveHistory.css'>");
         out.println("</head>");
         out.println("<body>");
+
+        out.println("<div class='history-container'>");
+        out.println("<div class='history-card'>");
 
         out.println("<h1>Leave History</h1>");
 
@@ -89,7 +94,12 @@ public class LeaveHistoryServlet extends HttpServlet
 
         out.println("<br><br>");
 
-        out.println("<a href='dashboard'>Back to Dashboard</a>");
+        //out.println("<a href='dashboard'>Back to Dashboard</a>");
+
+        out.println("<a class='back-button' href='dashboard'>Back to Dashboard</a>");
+
+        out.println("</div>");
+        out.println("</div>");
 
         out.println("</body>");
         out.println("</html>");

@@ -65,8 +65,12 @@ public class RevokeLeaveServlet extends HttpServlet
         out.println("<html>");
         out.println("<head>");
         out.println("<title>Revoke Leave</title>");
+        out.println("<link rel='stylesheet' href='css/common.css'>");
+        out.println("<link rel='stylesheet' href='css/revokeLeave.css'>");
         out.println("</head>");
         out.println("<body>");
+        out.println("<div class='revoke-container'>");
+        out.println("<div class='revoke-card'>");
 
         out.println("<h1>Approved Leave Requests</h1>");
 
@@ -96,9 +100,9 @@ public class RevokeLeaveServlet extends HttpServlet
             out.println("<td>" + leave.getReason() + "</td>");
 
             out.println("<td>");
-            out.println("<form action='revokeLeave' method='post'>");
+            out.println("<form class='action-form' action='revokeLeave' method='post'>");
             out.println("<input type='hidden' name='leaveId' value='" + leave.getLeaveId() + "'>");
-            out.println("<input type='submit' value='Revoke'>");
+            out.println("<input class='revoke-button' type='submit' value='Revoke'>");
             out.println("</form>");
             out.println("</td>");
 
@@ -106,11 +110,10 @@ public class RevokeLeaveServlet extends HttpServlet
         }
 
         out.println("</table>");
+        out.println("<a class='back-button' href='dashboard'>Back to Dashboard</a>");
 
-        out.println("<br><br>");
-
-        out.println("<a href='dashboard'>Back to Dashboard</a>");
-
+        out.println("</div>");
+        out.println("</div>");
         out.println("</body>");
         out.println("</html>");
 
@@ -151,6 +154,7 @@ public class RevokeLeaveServlet extends HttpServlet
                 leaveApprovalService.revokeLeave(
                         employee,
                         leaveId);
+        System.out.println("Revoked = " + revoked);
 
         if(revoked)
         {
