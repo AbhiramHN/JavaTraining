@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Employee;
 import model.Leave;
 import service.LeaveApprovalService;
+import util.ToastUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -147,22 +148,20 @@ public class RevokeLeaveServlet extends HttpServlet
             return;
         }
 
-        int leaveId =
-                Integer.parseInt(request.getParameter("leaveId"));
+        int leaveId = Integer.parseInt(request.getParameter("leaveId"));
 
-        boolean revoked =
-                leaveApprovalService.revokeLeave(
-                        employee,
-                        leaveId);
+        boolean revoked = leaveApprovalService.revokeLeave(employee, leaveId);
         System.out.println("Revoked = " + revoked);
-
+        PrintWriter out = response.getWriter();
         if(revoked)
         {
-            response.sendRedirect("revokeLeave");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_OK,
+                    "success", "Leave revoked successfully.", "revokeLeave");
         }
         else
         {
-            response.sendRedirect("revokeLeave");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_BAD_REQUEST,
+                    "error", "Unable to revoke leave.", "revokeLeave");
         }
     }
 }

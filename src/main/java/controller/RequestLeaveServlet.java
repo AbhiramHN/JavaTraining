@@ -11,8 +11,10 @@ import jakarta.servlet.http.HttpSession;
 import model.Employee;
 import model.Leave;
 import service.LeaveManagementService;
+import util.ToastUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
@@ -51,14 +53,11 @@ public class RequestLeaveServlet extends HttpServlet
 
         leave.setEmployeeId(employee.getEmployeeId());
 
-        leave.setLeaveType(LeaveType.valueOf(
-                        request.getParameter("leaveType")));
+        leave.setLeaveType(LeaveType.valueOf(request.getParameter("leaveType")));
 
-        LocalDate fromDate =
-                LocalDate.parse(request.getParameter("fromDate"));
+        LocalDate fromDate = LocalDate.parse(request.getParameter("fromDate"));
 
-        LocalDate toDate =
-                LocalDate.parse(request.getParameter("toDate"));
+        LocalDate toDate = LocalDate.parse(request.getParameter("toDate"));
 
         leave.setFromDate(fromDate);
         leave.setToDate(toDate);
@@ -71,14 +70,17 @@ public class RequestLeaveServlet extends HttpServlet
         leave.setRequestDate(LocalDate.now());
 
         boolean requested = leaveManagementService.requestLeave(employee, leave);
+        PrintWriter out = response.getWriter();
 
         if(requested)
         {
-            response.sendRedirect("dashboard");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_CREATED,
+                    "success", "Leave request submitted successfully", "dashboard");
         }
         else
         {
-            response.sendRedirect("pages/requestLeave.html");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_BAD_REQUEST,
+                    "error", "Unable to submit leave request", "pages/requestLeave.html");
         }
     }
 }

@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Employee;
 import service.EmployeeService;
+import util.ToastUtil;
+import java.io.PrintWriter;
 
 import java.io.IOException;
 
@@ -48,14 +50,21 @@ public class RegisterServlet extends HttpServlet
         employee.setPassword(password);
 
         boolean registered = employeeService.registerEmployee(employee);
+        PrintWriter out = response.getWriter();
 
         if(registered)
         {
-            response.sendRedirect("pages/login.html");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_CREATED, "success",
+                    "Registration Successful", "pages/login.html");
+
+            //response.sendRedirect("pages/login.html");
         }
         else
         {
-            response.sendRedirect("pages/register.html");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_BAD_REQUEST,
+                    "error", "Registration Failed", "pages/register.html");
+
+            //response.sendRedirect("pages/register.html");
         }
     }
 }

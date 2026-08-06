@@ -12,6 +12,7 @@ import model.Employee;
 import model.Leave;
 import service.LeaveApprovalService;
 import exception.UnauthorizedActionException;
+import util.ToastUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -161,29 +162,30 @@ public class ApproveLeaveServlet extends HttpServlet
 
         LeaveStatus leaveStatus = LeaveStatus.valueOf(request.getParameter("action"));
 
+        PrintWriter out = response.getWriter();
+
         try
         {
             leaveApprovalService.processLeave(approver, leaveId, leaveStatus);
 
-            response.sendRedirect("approveLeave");
+            String message;
+
+            if(leaveStatus == LeaveStatus.APPROVED)
+            {
+                message = "Leave approved successfully.";
+            }
+            else
+            {
+                message = "Leave rejected successfully.";
+            }
+
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_OK,
+                    "success", message, "approveLeave");
         }
         catch(UnauthorizedActionException exception)
         {
-            response.setContentType("text/html");
-
-            PrintWriter out = response.getWriter();
-
-            out.println("<html>");
-            out.println("<body>");
-
-            out.println("<h2 style='color:red;'>" + exception.getMessage() + "</h2>");
-
-            out.println("<br>");
-
-            out.println("<a href='approveLeave'>Back</a>");
-
-            out.println("</body>");
-            out.println("</html>");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_FORBIDDEN,
+                    "error", exception.getMessage(), "approveLeave");
         }
     }
 }
