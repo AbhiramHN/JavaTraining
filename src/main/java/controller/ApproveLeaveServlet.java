@@ -32,19 +32,11 @@ public class ApproveLeaveServlet extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
+
+
         HttpSession session = request.getSession(false);
-
-        if (session == null) {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
-
         Employee employee = (Employee) session.getAttribute("employee");
 
-        if (employee == null) {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
 
         if (employee.getDesignation() == Designation.EXECUTIVE) {
             response.sendRedirect("dashboard");
@@ -126,35 +118,16 @@ public class ApproveLeaveServlet extends HttpServlet
 
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
+
         HttpSession session = request.getSession(false);
-
-        if(session == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
-
         Employee approver = (Employee) session.getAttribute("employee");
-
-        if(approver == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
 
         if(approver.getDesignation() == Designation.EXECUTIVE)
         {
             response.sendRedirect("dashboard");
-            return;
-        }
-
-        if(approver == null)
-        {
-            response.sendRedirect("pages/login.html");
             return;
         }
 
@@ -166,21 +139,29 @@ public class ApproveLeaveServlet extends HttpServlet
 
         try
         {
-            leaveApprovalService.processLeave(approver, leaveId, leaveStatus);
+            boolean processed = leaveApprovalService.processLeave(approver, leaveId, leaveStatus);
 
-            String message;
-
-            if(leaveStatus == LeaveStatus.APPROVED)
+            if(processed)
             {
-                message = "Leave approved successfully.";
+                String message;
+
+                if(leaveStatus == LeaveStatus.APPROVED)
+                {
+                    message = "Leave approved successfully.";
+                }
+                else
+                {
+                    message = "Leave rejected successfully.";
+                }
+
+                ToastUtil.showToast(response, out, HttpServletResponse.SC_OK,
+                        "success", message, "approveLeave");
             }
             else
             {
-                message = "Leave rejected successfully.";
+                ToastUtil.showToast(response, out, HttpServletResponse.SC_BAD_REQUEST,
+                        "error", "Unable to process leave request.", "approveLeave");
             }
-
-            ToastUtil.showToast(response, out, HttpServletResponse.SC_OK,
-                    "success", message, "approveLeave");
         }
         catch(UnauthorizedActionException exception)
         {

@@ -34,20 +34,7 @@ public class RequestLeaveServlet extends HttpServlet
                           HttpServletResponse response) throws ServletException, IOException
     {
         HttpSession session = request.getSession(false);
-
-        if(session == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
-
         Employee employee = (Employee) session.getAttribute("employee");
-
-        if(employee == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
 
         Leave leave = new Leave();
 

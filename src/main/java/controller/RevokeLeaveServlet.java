@@ -28,26 +28,11 @@ public class RevokeLeaveServlet extends HttpServlet
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         HttpSession session = request.getSession(false);
-
-        if(session == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
-
-        Employee employee =
-                (Employee) session.getAttribute("employee");
-
-        if(employee == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
+        Employee employee = (Employee) session.getAttribute("employee");
 
         if(employee.getDesignation() == Designation.EXECUTIVE)
         {
@@ -55,8 +40,7 @@ public class RevokeLeaveServlet extends HttpServlet
             return;
         }
 
-        ArrayList<Leave> approvedLeaves =
-                leaveApprovalService.getApprovedLeaveRequests(
+        ArrayList<Leave> approvedLeaves = leaveApprovalService.getApprovedLeaveRequests(
                         employee.getDesignation());
 
         response.setContentType("text/html");

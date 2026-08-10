@@ -22,21 +22,8 @@ public class GenerateReportServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession(false);
+        Employee employee = (Employee) session.getAttribute("employee");
 
-        if(session == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
-
-        Employee employee =
-                (Employee) session.getAttribute("employee");
-
-        if(employee == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
 
         if(employee.getDesignation() != Designation.MANAGER)
         {

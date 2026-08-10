@@ -223,7 +223,7 @@ public class LeaveDAO {
                     JOIN employee e
                     ON lr.employee_id = e.employee_id
                     WHERE lr.status = 'PENDING'
-                    AND e.designation IN ('EXECUTIVE','LEAD')
+                    AND e.designation IN ('EXECUTIVE','LEAD','MANAGER')
                     """;
         }
 

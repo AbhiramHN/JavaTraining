@@ -16,25 +16,11 @@ import java.io.PrintWriter;
 public class DashboardServlet extends HttpServlet
 {
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         HttpSession session = request.getSession(false);
-
-        if(session == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
-
         Employee employee = (Employee) session.getAttribute("employee");
-
-        if(employee == null)
-        {
-            response.sendRedirect("pages/login.html");
-            return;
-        }
 
         response.setContentType("text/html");
 
@@ -54,18 +40,14 @@ public class DashboardServlet extends HttpServlet
 
         out.println("<h1>Leave Management System</h1>");
 
-        out.println("<h2>Hello, "
-                + employee.getName()
-                + "</h2>");
+        out.println("<h2>Hello, " + employee.getName() + "</h2>");
 
         out.println("<div class='dashboard-info'>");
 
-        out.println("<p><strong>Employee ID :</strong> "
-                + employee.getEmployeeId()
+        out.println("<p><strong>Employee ID :</strong> " + employee.getEmployeeId()
                 + "</p>");
 
-        out.println("<p><strong>Designation :</strong> "
-                + employee.getDesignation()
+        out.println("<p><strong>Designation :</strong> " + employee.getDesignation()
                 + "</p>");
 
         out.println("</div>");
