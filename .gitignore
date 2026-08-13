@@ -1,0 +1,29 @@
+# IntelliJ
+.idea/
+
+# Smart Tomcat
+.smarttomcat/
+
+# Maven build files
+target/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Reports (optional)
+reports/*.txt
+
+# Compiled Java files
+*.class
+
+# Packaged files
+*.jar
+*.war
+*.ear
