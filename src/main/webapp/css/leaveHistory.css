@@ -1,0 +1,25 @@
+.history-container{
+    width:90%;
+    margin:40px auto;
+}
+
+.history-card{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.back-button{
+    display:inline-block;
+    margin-top:20px;
+    background:#2563eb;
+    color:white;
+    padding:10px 18px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.back-button:hover{
+    background:#1d4ed8;
+}
