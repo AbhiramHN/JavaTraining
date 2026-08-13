@@ -8,6 +8,7 @@
 target/
 
 # Tomcat runtime folders
+conf/
 logs/
 temp/
 webapps/
