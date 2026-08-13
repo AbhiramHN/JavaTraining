@@ -4,26 +4,27 @@
 # Smart Tomcat
 .smarttomcat/
 
-# Maven build files
+# Maven build output
 target/
+
+# Maven wrapper JAR
+!.mvn/
+.mvn/wrapper/maven-wrapper.jar
+
+# Generated reports
+reports/*.txt
 
 # Logs
 *.log
 
-# Temporary files
-*.tmp
-
-# Operating system files
-.DS_Store
-Thumbs.db
-
-# Reports (optional)
-reports/*.txt
-
 # Compiled Java files
 *.class
 
-# Packaged files
+# Packaged artifacts
 *.jar
 *.war
 *.ear
+
+# OS files
+.DS_Store
+Thumbs.db
