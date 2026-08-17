@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Employee;
 import thread.ReportGenerationThread;
+import util.ToastUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,11 +24,13 @@ public class GenerateReportServlet extends HttpServlet
     {
         HttpSession session = request.getSession(false);
         Employee employee = (Employee) session.getAttribute("employee");
-
+        PrintWriter out = response.getWriter();
 
         if(employee.getDesignation() != Designation.MANAGER)
         {
-            response.sendRedirect("dashboard");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_UNAUTHORIZED,
+                    "error", "Authorization Failed", "dashboard");
+            //response.sendRedirect("dashboard");
             return;
         }
 
@@ -37,26 +40,43 @@ public class GenerateReportServlet extends HttpServlet
 
         response.setContentType("text/html");
 
-        PrintWriter out = response.getWriter();
+        out.println("""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Generate Report</title>
 
-        out.println("<html>");
-        out.println("<body>");
+            <link rel='stylesheet' href='css/common.css'>
+            <link rel='stylesheet' href='css/report.css'>
+        </head>
+        <body>
+        """);
 
-        out.println("<h2>Report generation started.</h2>");
+        out.println("<div class='report-container'>");
+
+        out.println("<div class='report-card'>");
+
+        out.println("<div class='report-icon'>📊</div>");
+
+        out.println("<h2>Report Generation Started</h2>");
+
+        out.println("<div class='report-message'>");
 
         out.println("<p>Your report is being generated in the background.</p>");
 
-        out.println("<p>Once completed, it will be available in the <b>reports</b> folder.</p>");
+        out.println("<p>Once completed, it will be available in the <strong>reports</strong> folder.</p>");
 
-        out.println("<br>");
+        out.println("</div>");
 
-        out.println("<a href='dashboard'>Back to Dashboard</a>");
+        out.println("<a class='dashboard-link' href='dashboard'>Back to Dashboard</a>");
 
-        out.println("<br>");
+        out.println("</div>");
 
-        //out.println("<a href='dashboard'>Back to Dashboard</a>");
+        out.println("</div>");
 
         out.println("</body>");
         out.println("</html>");
+
+
     }
 }

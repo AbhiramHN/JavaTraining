@@ -105,8 +105,7 @@ public class RevokeLeaveServlet extends HttpServlet
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         HttpSession session = request.getSession(false);
@@ -117,8 +116,7 @@ public class RevokeLeaveServlet extends HttpServlet
             return;
         }
 
-        Employee employee =
-                (Employee) session.getAttribute("employee");
+        Employee employee = (Employee) session.getAttribute("employee");
 
         if(employee == null)
         {
@@ -135,6 +133,7 @@ public class RevokeLeaveServlet extends HttpServlet
         int leaveId = Integer.parseInt(request.getParameter("leaveId"));
 
         boolean revoked = leaveApprovalService.revokeLeave(employee, leaveId);
+
         System.out.println("Revoked = " + revoked);
         PrintWriter out = response.getWriter();
         if(revoked)
