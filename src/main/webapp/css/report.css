@@ -1,0 +1,46 @@
+.report-container {
+    max-width: 700px;
+    margin: 80px auto;
+}
+
+.report-card {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+    text-align: center;
+}
+
+.report-icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.report-card h2 {
+    margin-bottom: 20px;
+}
+
+.report-message {
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.dashboard-link {
+    display: inline-block;
+
+    background: #2563eb;
+
+    color: white;
+
+    padding: 12px 24px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+.dashboard-link:hover {
+    background: #1d4ed8;
+}

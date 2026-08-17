@@ -40,7 +40,7 @@ public class LeaveDAO {
                     JOIN employee e
                     ON lr.employee_id = e.employee_id
                     WHERE lr.status = 'APPROVED'
-                    AND e.designation IN ('EXECUTIVE','LEAD')
+                    AND e.designation IN ('EXECUTIVE','LEAD','MANAGER')
                     """;
         }
 
@@ -116,15 +116,12 @@ public class LeaveDAO {
         {
             preparedStatement.setString(1, leave.getEmployeeId());
             preparedStatement.setString(2, leave.getLeaveType().name());
-            preparedStatement.setDate(3,
-                    java.sql.Date.valueOf(leave.getFromDate()));
-            preparedStatement.setDate(4,
-                    java.sql.Date.valueOf(leave.getToDate()));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(leave.getFromDate()));
+            preparedStatement.setDate(4, java.sql.Date.valueOf(leave.getToDate()));
             preparedStatement.setInt(5, leave.getNumberOfDays());
             preparedStatement.setString(6, leave.getReason());
             preparedStatement.setString(7, leave.getStatus().name());
-            preparedStatement.setDate(8,
-                    java.sql.Date.valueOf(leave.getRequestDate()));
+            preparedStatement.setDate(8, java.sql.Date.valueOf(leave.getRequestDate()));
 
             int rowsAffected = preparedStatement.executeUpdate();
 

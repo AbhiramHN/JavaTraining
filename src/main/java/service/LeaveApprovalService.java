@@ -221,13 +221,9 @@ public class LeaveApprovalService
             {
                 connection.setAutoCommit(false);
 
-                boolean leaveUpdated =
-                        leaveDAO.updateLeaveStatus(
-                                connection,
-                                leaveId,
-                                LeaveStatus.REVOKED,
-                                employee.getEmployeeId(),
-                                LocalDate.now());
+                boolean leaveUpdated = leaveDAO.updateLeaveStatus(
+                                connection, leaveId, LeaveStatus.REVOKED,
+                                employee.getEmployeeId(), LocalDate.now());
 
                 if(!leaveUpdated)
                 {
@@ -237,18 +233,13 @@ public class LeaveApprovalService
 
                 if(leave.getStatus() == LeaveStatus.APPROVED)
                 {
-                    int currentBalance =
-                            leaveBalance.get(leave.getLeaveType());
+                    int currentBalance = leaveBalance.get(leave.getLeaveType());
 
-                    int newBalance =
-                            currentBalance + leave.getNumberOfDays();
+                    int newBalance = currentBalance + leave.getNumberOfDays();
 
-                    boolean balanceUpdated =
-                            leaveBalanceDAO.updateLeaveBalance(
-                                    connection,
-                                    leave.getEmployeeId(),
-                                    leave.getLeaveType(),
-                                    newBalance);
+                    boolean balanceUpdated = leaveBalanceDAO.updateLeaveBalance(
+                                    connection, leave.getEmployeeId(),
+                                    leave.getLeaveType(), newBalance);
 
                     if(!balanceUpdated)
                     {

@@ -14,6 +14,7 @@ public class ReportGenerationThread extends Thread
     @Override
     public void run()
     {
+
         reportService.generateReport();
     }
 }
