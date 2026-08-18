@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/revokeLeave")
-public class RevokeLeaveServlet extends HttpServlet
+public class RevokeLeaveController extends HttpServlet
 {
     private LeaveApprovalService leaveApprovalService;
 

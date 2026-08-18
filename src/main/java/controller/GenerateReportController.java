@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/generateReport")
-public class GenerateReportServlet extends HttpServlet
+public class GenerateReportController extends HttpServlet
 {
     @Override
     protected void doGet(HttpServletRequest request,

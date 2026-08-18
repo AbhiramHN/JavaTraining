@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/logout")
-public class LogoutServlet extends HttpServlet
+public class LogoutController extends HttpServlet
 {
     @Override
     protected void doGet(HttpServletRequest request,

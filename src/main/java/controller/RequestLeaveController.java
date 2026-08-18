@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @WebServlet("/requestLeave")
-public class RequestLeaveServlet extends HttpServlet
+public class RequestLeaveController extends HttpServlet
 {
     private LeaveManagementService leaveManagementService;
 

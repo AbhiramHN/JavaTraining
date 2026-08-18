@@ -16,7 +16,7 @@ import java.io.PrintWriter;
 import java.io.IOException;
 
 @WebServlet("/register")
-public class RegisterServlet extends HttpServlet
+public class RegisterController extends HttpServlet
 {
     private EmployeeService employeeService;
 

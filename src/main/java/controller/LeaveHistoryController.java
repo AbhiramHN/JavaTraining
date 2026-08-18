@@ -1,6 +1,5 @@
 package controller;
 
-import dao.LeaveDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/leaveHistory")
-public class LeaveHistoryServlet extends HttpServlet
+public class LeaveHistoryController extends HttpServlet
 {
     private LeaveManagementService leaveManagementService;
 

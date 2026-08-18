@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 @WebServlet("/approveLeave")
-public class ApproveLeaveServlet extends HttpServlet
+public class ApproveLeaveController extends HttpServlet
 {
     private LeaveApprovalService leaveApprovalService;
 
@@ -30,9 +30,7 @@ public class ApproveLeaveServlet extends HttpServlet
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession(false);
         Employee employee = (Employee) session.getAttribute("employee");

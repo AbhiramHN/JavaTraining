@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/login")
-public class LoginServlet extends HttpServlet
+public class LoginController extends HttpServlet
 {
     private AuthenticationService authenticationService;
 
