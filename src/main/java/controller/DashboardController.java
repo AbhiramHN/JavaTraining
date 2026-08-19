@@ -16,62 +16,149 @@ import java.io.PrintWriter;
 public class DashboardController extends HttpServlet
 {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws ServletException, IOException {
+
         HttpSession session = request.getSession(false);
-        Employee employee = (Employee) session.getAttribute("employee");
+
+        Employee employee =
+                (Employee) session.getAttribute("employee");
 
         response.setContentType("text/html");
 
         PrintWriter out = response.getWriter();
 
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Dashboard</title>");
-        out.println("<link rel='stylesheet' href='css/common.css'>");
-        out.println("<link rel='stylesheet' href='css/dashboard.css'>");
-        out.println("</head>");
-        out.println("<body>");
+        out.println("""
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Dashboard</title>
 
-        out.println("<div class='dashboard-container'>");
-        out.println("<div class='dashboard-card'>");
+                <link rel="stylesheet" href="css/common.css">
+                <link rel="stylesheet" href="css/dashboard.css">
+            </head>
 
-        out.println("<h1>Leave Management System</h1>");
+            <body>
+            <div class="dashboard-container">
 
-        out.println("<h2>Hello, " + employee.getName() + "</h2>");
+            <div class="dashboard-header">
 
-        out.println("<div class='dashboard-info'>");
+                <div>
+                    <h1>Leave Management System</h1>
+                </div>
 
-        out.println("<p><strong>Employee ID :</strong> " + employee.getEmployeeId()
-                + "</p>");
+                <div class="user-section">
 
-        out.println("<p><strong>Designation :</strong> " + employee.getDesignation()
-                + "</p>");
+                    <span class="user-name">
+            """);
 
-        out.println("</div>");
+        out.println(employee.getName());
 
-        out.println("<div class='dashboard-links'>");
-        out.println("<a href='pages/requestLeave.html'>Request Leave</a>");
+        out.println("""
+                    </span>
 
-        out.println("<a href='leaveHistory'>View Leave History</a>");
+                    <a class="header-logout"
+                       href="logout">
+                        Logout
+                    </a>
 
-        if(employee.getDesignation() == Designation.LEAD || employee.getDesignation() == Designation.MANAGER)
-        {
-            out.println("<a href='approveLeave'>Approve Leave</a>");
-            out.println("<a href='revokeLeave'>Revoke Leave</a>");
-            out.println("<a href='generateReport'>Generate Report</a>");
+                </div>
 
+            </div>
 
+            <div class="dashboard-grid">
+
+            <div class="employee-card">
+
+                <h2>Profile</h2>
+
+                <div class="employee-details">
+            """);
+
+        out.println("""
+                <div class="detail-item">
+                    <span>Employee ID</span>
+                    <strong>
+            """
+                + employee.getEmployeeId()
+                + """
+                    </strong>
+                </div>
+            """);
+
+        out.println("""
+                <div class="detail-item">
+                    <span>Designation</span>
+                    <strong>
+            """
+                + employee.getDesignation()
+                + """
+                    </strong>
+                </div>
+            """);
+
+        out.println("""
+                <div class="detail-item">
+                    <span>Name</span>
+                    <strong>
+            """
+                + employee.getName()
+                + """
+                    </strong>
+                </div>
+            """);
+
+        out.println("""
+                </div>
+
+            </div>
+
+            <div class="actions-card">
+
+                <h2>Quick Actions</h2>
+
+                <div class="action-grid">
+
+                    <a href="pages/requestLeave.html">
+                        Request Leave
+                    </a>
+
+                    <a href="leaveHistory">
+                        Leave History
+                    </a>
+            """);
+
+        if (employee.getDesignation() == Designation.LEAD
+                || employee.getDesignation() == Designation.MANAGER) {
+
+            out.println("""
+                    <a href="approveLeave">
+                        Approve Leave
+                    </a>
+
+                    <a href="generateReport">
+                        Generate Report
+                    </a>
+
+                    <a href="revokeLeave">
+                        Revoke Leave
+                    </a>
+                """);
         }
 
-        out.println("<a href='logout'>Logout</a>");
+        out.println("""
+                </div>
 
-        out.println("</div>");
-        out.println("</div>");
+            </div>
 
-        out.println("</body>");
-        out.println("</html>");
+            </div>
+
+            </div>
+
+            </body>
+
+            </html>
+            """);
     }
 }

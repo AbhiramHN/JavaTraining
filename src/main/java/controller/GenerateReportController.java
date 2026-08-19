@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Employee;
 import thread.ReportGenerationThread;
+import util.ToastUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,11 +24,14 @@ public class GenerateReportController extends HttpServlet
     {
         HttpSession session = request.getSession(false);
         Employee employee = (Employee) session.getAttribute("employee");
+        PrintWriter out = response.getWriter();
 
 
         if(employee.getDesignation() != Designation.MANAGER)
         {
-            response.sendRedirect("dashboard");
+            ToastUtil.showToast(response, out, HttpServletResponse.SC_BAD_REQUEST,
+                    "error", "Not Authorized.", "dashboard");
+            //response.sendRedirect("dashboard");
             return;
         }
 
@@ -37,10 +41,22 @@ public class GenerateReportController extends HttpServlet
 
         response.setContentType("text/html");
 
-        PrintWriter out = response.getWriter();
+        //PrintWriter out = response.getWriter();
 
         out.println("<html>");
+
+        out.println("<head>");
+        out.println("<title>Report Generation</title>");
+        out.println("<link rel='stylesheet' href='"
+                + request.getContextPath()
+                + "/css/report.css'>");
+        out.println("</head>");
+
         out.println("<body>");
+
+        out.println("<div class='container'>");
+
+        out.println("<div class='card'>");
 
         out.println("<h2>Report generation started.</h2>");
 
@@ -48,15 +64,14 @@ public class GenerateReportController extends HttpServlet
 
         out.println("<p>Once completed, it will be available in the <b>reports</b> folder.</p>");
 
-        out.println("<br>");
-
         out.println("<a href='dashboard'>Back to Dashboard</a>");
 
-        out.println("<br>");
+        out.println("</div>");
 
-        //out.println("<a href='dashboard'>Back to Dashboard</a>");
+        out.println("</div>");
 
         out.println("</body>");
+
         out.println("</html>");
     }
 }
